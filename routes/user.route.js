@@ -1,4 +1,15 @@
 const express = require("express");
-const route = express.Router();
+const router = express.Router();
 
-router.get("/singleuser", (req, res) => {});
+const { addUser } = require("../controllers/user.controller");
+
+router.post("/", addUser);
+router.get("/singleuser", async (req, res) => {
+  try {
+  } catch (err) {
+    console.log({ err });
+    res.status(503).json({ success: false, err });
+  }
+});
+
+module.exports = router;

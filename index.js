@@ -4,11 +4,12 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const port = 3003;
 const { initializeDBConnection } = require("./db/db.connect");
+const user = require("./routes/user.route");
 require("dotenv").config();
 
 app.use(cors());
 app.use(express.json());
-
+app.use("/user", user);
 initializeDBConnection();
 /**
  * 404 Route Handler
