@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "mongoose": "^6.1.4"
+  },
+  "name": "cosportsbe",
+  "description": "this is the backend for my social media app names cosports",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "start":"nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jay-rajput30/cosportsBE.git"
+  },
+  "author": "jay rajput",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jay-rajput30/cosportsBE/issues"
+  },
+  "homepage": "https://github.com/jay-rajput30/cosportsBE#readme"
+}
