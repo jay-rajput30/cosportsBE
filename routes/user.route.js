@@ -1,15 +1,16 @@
 const express = require("express");
 const router = express.Router();
-
-const { addUser } = require("../controllers/user.controller");
+const User = require("../models/user.model");
+const {
+  addUser,
+  findSingleUser,
+  editExistingUser,
+} = require("../controllers/user.controller");
 
 router.post("/", addUser);
-router.get("/singleuser", async (req, res) => {
-  try {
-  } catch (err) {
-    console.log({ err });
-    res.status(503).json({ success: false, err });
-  }
-});
+
+router.get("/singleuser/:id", findSingleUser);
+
+router.post("/edituser/:id", editExistingUser);
 
 module.exports = router;

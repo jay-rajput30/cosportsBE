@@ -68,12 +68,12 @@ const editExistingUser = async (req, res) => {
   }
 };
 
-{
-    firstName:"Jay",
-    lastName:"Rajput",
-    email:"jayrajput@gmail.com",
-    password: "jayrajput",
-    username:"jayrajput30"
-}
+// {
+//     firstName:"Jay",
+//     lastName:"Rajput",
+//     email:"jayrajput@gmail.com",
+//     password: "jayrajput",
+//     username:"jayrajput30"
+// }
 
 module.exports = { addUser, findSingleUser, editExistingUser };
