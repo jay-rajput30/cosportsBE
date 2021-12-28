@@ -3,11 +3,13 @@ const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const port = 3003;
+const { initializeDBConnection } = require("./db/db.connect");
 require("dotenv").config();
 
 app.use(cors());
 app.use(express.json());
 
+initializeDBConnection();
 /**
  * 404 Route Handler
  * Note: DO not MOVE. This should be the last route
