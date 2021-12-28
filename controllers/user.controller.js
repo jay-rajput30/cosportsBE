@@ -40,14 +40,12 @@ const findSingleUser = async (req, res) => {
 const editExistingUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { firstName, lastName, email, username } = req.body;
-    console.log({ firstName, lastName, email, username, id });
-    const existingEmail = await User.findOne({ email });
+    const { firstName, lastName, username } = req.body;
+    // console.log({ firstName, lastName, email, username, id });
+
     const existingUsername = await User.findOne({ username });
 
-    if (existingEmail) {
-      res.status(503).json({ success: false, message: "email already exists" });
-    } else if (existingUsername) {
+    if (existingUsername) {
       res
         .status(503)
         .json({ success: false, message: "username already exists" });
@@ -55,7 +53,6 @@ const editExistingUser = async (req, res) => {
       const userFound = await User.findById(id);
       userFound.firstName = firstName;
       userFound.lastName = lastName;
-      userFound.email = email;
       userFound.username = username;
 
       await userFound.save();
