@@ -26,4 +26,20 @@ const updateUserBio = async (req, res) => {
   }
 };
 
-module.exports = { getUserAccount, updateUserBio };
+const folllowUser = async (req, res) => {
+  try {
+    const { userId } = req.body;
+
+    const userFound = await User.findOne({ uid: userId });
+    if (userId === userFound.uid) {
+      res.status(503).json({ success: false, message: "cannot follow self" });
+    }
+    userFound.followers.push(userId);
+    await userFound.save();
+    res.status(200).json({ success: true, user: userFound });
+  } catch (err) {
+    console.log({ err });
+    res.status(503).json({ success: false, err });
+  }
+};
+module.exports = { getUserAccount, updateUserBio, folllowUser };
