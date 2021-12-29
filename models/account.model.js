@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const accountSchema = Schema(
+const accountSchema = new Schema(
   {
     uid: {
       type: Schema.Types.ObjectId,
