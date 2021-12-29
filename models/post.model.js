@@ -23,7 +23,7 @@ const postSchema = new Schema(
     },
     type: {
       type: String,
-      required: " a type value is required",
+      required: "a type value is required",
     },
   },
   { timestamps: true }

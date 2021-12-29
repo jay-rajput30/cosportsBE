@@ -21,7 +21,6 @@ const accountSchema = new Schema(
     ],
     bio: {
       type: String,
-      required: "the users bio is required",
       default: "Hey there. How you doin?",
     },
   },

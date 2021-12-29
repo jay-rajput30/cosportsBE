@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/user.model");
+const Account = require("../models/account.model");
 
 const addUser = async (req, res) => {
   try {
@@ -14,6 +15,15 @@ const addUser = async (req, res) => {
           password: hash,
         });
         await user.save();
+
+        const account = new Account({
+          uid: user._id,
+          following: [],
+          followers: [],
+          bio: "how you doin?",
+        });
+
+        await account.save();
         res
           .status(200)
           .json({ firstName, lastName, email, username, password: hash });
