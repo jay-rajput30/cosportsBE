@@ -6,11 +6,11 @@ const {
 } = require("../controllers/post.controller");
 const router = express.Router();
 
-router.get("/", getAllPosts);
+router.get("/", authenticateRoute, getAllPosts);
 
-router.post("/", addPost);
+router.post("/", authenticateRoute, addPost);
 
-router.post("/editpost/:id", editPost);
+router.post("/editpost", authenticateRoute, editPost);
 
 router.post("/deletepost/:id");
 

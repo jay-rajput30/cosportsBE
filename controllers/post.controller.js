@@ -14,9 +14,10 @@ const getAllPosts = async (req, res) => {
 
 const addPost = async () => (req, res) => {
   try {
-    const { uid, content, type } = req.params;
+    const { content, type } = req.body;
+    const { userId } = req.user;
     const newPost = new Post({
-      uid,
+      userId,
       content,
       date: new Date(),
       likes: 0,
@@ -33,10 +34,10 @@ const addPost = async () => (req, res) => {
 
 const editPost = async (req, res) => {
   try {
-    const { id } = req.params;
-    const { content } = req.body;
+    // const { userId } = req.user;
+    const { postId, content } = req.body;
+    const existingPost = await Post.findById(postId);
 
-    const existingPost = await Post.findById(id);
     existingPost.content = content;
     await existingPost.save();
     res.status(200).json({ success: true, post: existingPost });
