@@ -4,13 +4,13 @@ const User = require("../model/user.model");
 
 const loginVerify = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const user = await User.findById(id);
+    const { username, password } = req.body;
+    const user = await User.findOne({ username: username.toString() });
     bcrypt.compare(password, userFound.password, (err, result) => {
       if (result) {
         const userDetails = {
           userId: userFound._id,
-          name: userFound.username,
+          username: userFound.username,
           email: userFound.email,
         };
         const token = jwt.sign(userDetails, process.env.MY_SECRET_KEY, {
@@ -18,7 +18,7 @@ const loginVerify = async (req, res, next) => {
         });
 
         userFound.password = undefined;
-        req.userFound = user;
+        req.user = user;
         req.token = token;
         next();
       } else {

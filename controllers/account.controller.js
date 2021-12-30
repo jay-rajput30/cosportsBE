@@ -3,9 +3,9 @@ const Account = require("../models/account.model");
 
 const getUserAccount = async (req, res) => {
   try {
-    const { id } = req.params;
-    const userAccountFound = await Account.findOne({ uid: `${id}` });
-    res.status(200).json({ success: true, userAccount });
+    const { userId } = req.user;
+    const userAccountFound = await Account.findOne({ uid: `${userId}` });
+    res.status(200).json({ success: true, user: userAccountFound });
   } catch (err) {
     console.log(err);
     res.status(503).josn({ success: false, err });
@@ -14,7 +14,7 @@ const getUserAccount = async (req, res) => {
 
 const updateUserBio = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { userId } = req.user;
     const { newBio } = req.body;
     const userAccountFound = await Account.findOne({ uid: `${id}` });
     userAccountFound.bio = newBio;

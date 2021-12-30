@@ -5,9 +5,10 @@ const {
   followUser,
   unfollowUser,
 } = require("../controllers/account.controller");
+const authenticateRoute = require("../middlewares/route.auth");
 const router = express.Router();
 
-router.get("/:id", getUserAccount);
+router.get("/", authenticateRoute, getUserAccount);
 
 router.post("/updatebio/:id", updateUserBio);
 

@@ -7,11 +7,12 @@ const {
   editExistingUser,
 } = require("../controllers/user.controller");
 const loginVerify = require("../middlewares/login.auth");
+const authenticateRoute = require("../middlewares/route.auth");
 
 router.post("/", addUser);
 
-router.get("/singleuser/:id", loginVerify, findSingleUser);
+router.get("/singleuser", loginVerify, findSingleUser);
 
-router.post("/edituser/:id", editExistingUser);
+router.post("/edituser", authenticateRoute, editExistingUser);
 
 module.exports = router;
