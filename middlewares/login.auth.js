@@ -1,11 +1,13 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const User = require("../model/user.model");
+const User = require("../models/user.model");
 
 const loginVerify = async (req, res, next) => {
   try {
     const { username, password } = req.body;
-    const user = await User.findOne({ username: username.toString() });
+
+    const userFound = await User.findOne({ username: username.toString() });
+    console.log({ username, password, userFound });
     bcrypt.compare(password, userFound.password, (err, result) => {
       if (result) {
         const userDetails = {
@@ -14,11 +16,11 @@ const loginVerify = async (req, res, next) => {
           email: userFound.email,
         };
         const token = jwt.sign(userDetails, process.env.MY_SECRET_KEY, {
-          expiresIn: "600000ms",
+          expiresIn: "1200000ms",
         });
 
         userFound.password = undefined;
-        req.user = user;
+        req.userFound = userFound;
         req.token = token;
         next();
       } else {

@@ -56,7 +56,9 @@ const findSingleUser = async (req, res) => {
     // const { id } = req.params;
     // const userFound = await User.findById(id);
     // console.log({ userFound });
-    res.status(200).json({ success: true, user: userFound });
+    res
+      .status(200)
+      .json({ success: true, user: req.userFound, token: req.token });
   } catch (err) {
     console.log({ err });
     res.status(503).json({ success: false, err });
@@ -65,30 +67,30 @@ const findSingleUser = async (req, res) => {
 
 const editExistingUser = async (req, res) => {
   try {
-    const { userId } = req.user;
+    const { userId } = req.data;
     const { firstName, lastName, username, newBio } = req.body;
-    // console.log({ firstName, lastName, email, username, id });
+
+    // console.log({ data: req.data, header: req.headers });
 
     const existingUsername = await User.findOne({ username });
-    const userAccountFound = await Account.findOne({ uid: `${id}` });
+    const userAccountFound = await Account.findOne({ uid: `${userId}` });
+    const userFound = await User.findById(userId);
 
-    if (existingUsername) {
-      res
-        .status(503)
-        .json({ success: false, message: "username already exists" });
-    } else {
-      const userFound = await User.findById(id);
+    // if (existingUsername) {
+    // res
+    //   .status(503)
+    //   .json({ success: false, message: "username already exists" });
+    // } else {
+    userAccountFound.bio = newBio;
+    userFound.firstName = firstName;
+    userFound.lastName = lastName;
+    userFound.username = username;
 
-      userAccountFound.bio = newBio;
-      userFound.firstName = firstName;
-      userFound.lastName = lastName;
-      userFound.username = username;
-
-      await userAccountFound.save();
-      await userFound.save();
-
-      res.status(200).json({ success: true, user: userFound });
-    }
+    await userAccountFound.save();
+    await userFound.save();
+    // }
+    console.log({ userAccountFound, userFound });
+    res.status(200).json({ success: true, user: userFound, token: req.token });
   } catch (err) {
     console.log({ err });
     res.status(503).json({ success: false, err });
@@ -96,11 +98,13 @@ const editExistingUser = async (req, res) => {
 };
 
 // {
-//     firstName:"Jay",
-//     lastName:"Rajput",
-//     email:"jayrajput@gmail.com",
-//     password: "jayrajput",
-//     username:"jayrajput30"
+//   "firstName":"Jay",
+//  "lastName":"Rajput",
+//  "location": "mumbai",
+//  "website": "www.jayrajput30.com",
+//   "email":"jayrajput@gmail.com",
+//   "password": "jayrajput",
+//   "username":"jayrajput30"
 // }
 
 module.exports = { addUser, findSingleUser, editExistingUser };
