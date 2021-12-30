@@ -4,12 +4,22 @@ const Account = require("../models/account.model");
 
 const addUser = async (req, res) => {
   try {
-    const { firstName, lastName, email, username, password } = req.body;
+    const {
+      firstName,
+      lastName,
+      location,
+      website,
+      email,
+      username,
+      password,
+    } = req.body;
     bcrypt.genSalt(10, async (err, salt) => {
       bcrypt.hash(password, salt, async (err, hash) => {
         const user = new User({
           firstName,
           lastName,
+          location,
+          website,
           email,
           username,
           password: hash,
@@ -24,9 +34,15 @@ const addUser = async (req, res) => {
         });
 
         await account.save();
-        res
-          .status(200)
-          .json({ firstName, lastName, email, username, password: hash });
+        res.status(200).json({
+          firstName,
+          lastName,
+          location,
+          website,
+          email,
+          username,
+          password: hash,
+        });
       });
     });
   } catch (err) {
@@ -37,9 +53,9 @@ const addUser = async (req, res) => {
 
 const findSingleUser = async (req, res) => {
   try {
-    const { id } = req.params;
-    const userFound = await User.findById(id);
-    console.log({ userFound });
+    // const { id } = req.params;
+    // const userFound = await User.findById(id);
+    // console.log({ userFound });
     res.status(200).json({ success: true, user: userFound });
   } catch (err) {
     console.log({ err });

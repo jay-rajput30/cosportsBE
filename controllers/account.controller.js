@@ -26,15 +26,15 @@ const updateUserBio = async (req, res) => {
   }
 };
 
-const folllowUser = async (req, res) => {
+const followUser = async (req, res) => {
   try {
-    const { userId } = req.body;
-
-    const userFound = await User.findOne({ uid: userId });
-    if (userId === userFound.uid) {
-      res.status(503).json({ success: false, message: "cannot follow self" });
-    }
-    userFound.followers.push(userId);
+    const { followerId } = req.body;
+    const { id } = req.params;
+    const userFound = await User.findOne({ uid: id });
+    // if (userId === userFound.uid) {
+    //   res.status(503).json({ success: false, message: "cannot follow self" });
+    // }
+    userFound.followers.push(followerId);
     await userFound.save();
     res.status(200).json({ success: true, user: userFound });
   } catch (err) {
@@ -42,4 +42,21 @@ const folllowUser = async (req, res) => {
     res.status(503).json({ success: false, err });
   }
 };
-module.exports = { getUserAccount, updateUserBio, folllowUser };
+const unfollowUser = async (req, res) => {
+  try {
+    const { followerId } = req.body;
+    const { id } = req.params;
+    const userFound = await User.findOne({ uid: id });
+
+    userFound.followers = userFound.followers.filter(
+      (item) => item.toString() != followerId.toString()
+    );
+    await userFound.save();
+    res.status(200).json({ success: true, user: userFound });
+  } catch (err) {
+    console.log({ err });
+    res.status(503).json({ success: false, err });
+  }
+};
+
+module.exports = { getUserAccount, updateUserBio, followUser, unfollowUser };

@@ -6,10 +6,11 @@ const {
   findSingleUser,
   editExistingUser,
 } = require("../controllers/user.controller");
+const loginVerify = require("../middlewares/login.auth");
 
 router.post("/", addUser);
 
-router.get("/singleuser/:id", findSingleUser);
+router.get("/singleuser/:id", loginVerify, findSingleUser);
 
 router.post("/edituser/:id", editExistingUser);
 

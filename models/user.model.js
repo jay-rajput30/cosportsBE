@@ -11,6 +11,13 @@ const userSchema = new Schema(
       type: String,
       required: " last name is required",
     },
+    location: {
+      type: String,
+      require: "the user's location is required",
+    },
+    website: {
+      type: String,
+    },
     email: {
       type: String,
       required: "email is required",

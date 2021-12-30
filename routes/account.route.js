@@ -2,7 +2,8 @@ const express = require("express");
 const {
   getUserAccount,
   updateUserBio,
-  folllowUser,
+  followUser,
+  unfollowUser,
 } = require("../controllers/account.controller");
 const router = express.Router();
 
@@ -10,7 +11,8 @@ router.get("/:id", getUserAccount);
 
 router.post("/updatebio/:id", updateUserBio);
 
-router.post("/followuser/:id", folllowUser);
-router.post("/unfollowuser");
+router.post("/followuser/:id", followUser);
+
+router.post("/unfollowuser/:id", unfollowUser);
 
 module.exports = router;
