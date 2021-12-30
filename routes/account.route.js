@@ -12,8 +12,8 @@ router.get("/", authenticateRoute, getUserAccount);
 
 router.post("/updatebio/:id", updateUserBio);
 
-router.post("/followuser/:id", followUser);
+router.post("/followuser", authenticateRoute, followUser);
 
-router.post("/unfollowuser/:id", unfollowUser);
+router.post("/unfollowuser/:id", authenticateRoute, unfollowUser);
 
 module.exports = router;

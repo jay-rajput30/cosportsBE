@@ -29,8 +29,8 @@ const updateUserBio = async (req, res) => {
 const followUser = async (req, res) => {
   try {
     const { followerId } = req.body;
-    const { id } = req.params;
-    const userFound = await User.findOne({ uid: id });
+    const { userId } = req.user;
+    const userFound = await User.findOne({ uid: userId });
     // if (userId === userFound.uid) {
     //   res.status(503).json({ success: false, message: "cannot follow self" });
     // }
@@ -45,8 +45,8 @@ const followUser = async (req, res) => {
 const unfollowUser = async (req, res) => {
   try {
     const { followerId } = req.body;
-    const { id } = req.params;
-    const userFound = await User.findOne({ uid: id });
+    const { userId } = req.user;
+    const userFound = await User.findOne({ uid: userId });
 
     userFound.followers = userFound.followers.filter(
       (item) => item.toString() != followerId.toString()
