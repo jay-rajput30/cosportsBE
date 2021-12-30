@@ -12,18 +12,17 @@ const getAllPosts = async (req, res) => {
   }
 };
 
-const addPost = async () => (req, res) => {
+const addPost = async (req, res) => {
   try {
     const { content, type } = req.body;
-    const { userId } = req.user;
+    const { userId } = req.data;
     const newPost = new Post({
-      userId,
+      uid: userId,
       content,
       date: new Date(),
       likes: 0,
       type,
     });
-
     await newPost.save();
     res.status(200).json({ success: true, post: newPost });
   } catch (err) {
