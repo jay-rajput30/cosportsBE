@@ -11,7 +11,7 @@ const authenticateRoute = require("../middlewares/route.auth");
 
 router.post("/", addUser);
 
-router.get("/singleuser", loginVerify, findSingleUser);
+router.post("/singleuser", loginVerify, findSingleUser);
 
 router.post("/edituser", authenticateRoute, editExistingUser);
 
