@@ -7,6 +7,7 @@ const { initializeDBConnection } = require("./db/db.connect");
 const user = require("./routes/user.route");
 const account = require("./routes/account.route");
 const post = require("./routes/post.route");
+const { User } = require("./models/user.model");
 require("dotenv").config();
 
 app.use(cors());

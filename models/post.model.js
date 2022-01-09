@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-
+const { User } = require("../models/account.model");
 const postSchema = new Schema(
   {
     uid: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "user",
     },
     content: {
       type: String,

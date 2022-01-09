@@ -4,7 +4,7 @@ const Post = require("../models/post.model");
 
 const getAllPosts = async (req, res) => {
   try {
-    const allPost = await Post.find({});
+    const allPost = await Post.find({}).populate("uid");
     res.status(200).json({ success: true, posts: allPost });
   } catch (err) {
     console.log({ error: err });
