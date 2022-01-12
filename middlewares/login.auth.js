@@ -16,7 +16,7 @@ const loginVerify = async (req, res, next) => {
           email: userFound.email,
         };
         const token = jwt.sign(userDetails, process.env.MY_SECRET_KEY, {
-          expiresIn: "1200000ms",
+          expiresIn: "12000000ms",
         });
 
         userFound.password = undefined;
