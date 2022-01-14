@@ -5,7 +5,7 @@ const Comment = require("../models/comment.model");
 
 const getAllComments = async (req, res) => {
   try {
-    const allComments = await Comment.find({});
+    const allComments = await Comment.find({}).populate("uid");
     res.status(200).json({ success: true, comments: allComments });
   } catch {
     console.log({ error: e });
