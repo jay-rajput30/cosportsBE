@@ -4,13 +4,17 @@ router = express.Router();
 const {
   getPostComments,
   getSingleComment,
+  addComment,
   getAllComments,
 } = require("../controllers/comment.controller");
+const authenticateRoute = require("../middlewares/route.auth");
 
-router.get("/", getAllComments);
+router.get("/", authenticateRoute, getAllComments);
 
-router.get("/postcomment", getPostComments);
+router.get("/postcomments", authenticateRoute, getPostComments);
 
-router.get("/singlecomment", getSingleComment);
+router.post("/addcomment", authenticateRoute, addComment);
+
+router.get("/singlecomment", authenticateRoute, getSingleComment);
 
 module.exports = router;

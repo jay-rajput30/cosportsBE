@@ -27,6 +27,25 @@ const getPostComments = async (req, res) => {
   }
 };
 
+const addComment = async (req, res) => {
+  try {
+    const { content, postId } = req.body;
+    const { userId } = req.data;
+    const newComment = new Comment({
+      uid: userId,
+      postId,
+      content,
+      date: new Date(),
+      likes: 0,
+    });
+    await newComment.save();
+    res.status(200).json({ success: true, comment: newComment });
+  } catch (e) {
+    console.log({ error: e });
+    res.status(503).json({ success: false, error: e });
+  }
+};
+
 const getSingleComment = async (req, res) => {
   const { postId } = req.body;
   const { userId } = req.data;
@@ -38,4 +57,9 @@ const getSingleComment = async (req, res) => {
   }
 };
 
-module.exports = { getAllComments, getPostComments, getSingleComment };
+module.exports = {
+  getAllComments,
+  getPostComments,
+  addComment,
+  getSingleComment,
+};
