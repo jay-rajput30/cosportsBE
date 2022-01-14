@@ -7,7 +7,10 @@ const { initializeDBConnection } = require("./db/db.connect");
 const user = require("./routes/user.route");
 const account = require("./routes/account.route");
 const post = require("./routes/post.route");
+const comment = require("./routes/comment.route");
+
 const { User } = require("./models/user.model");
+// const { Comment } = require("./models/comment.model");
 require("dotenv").config();
 
 app.use(cors());
@@ -15,6 +18,7 @@ app.use(express.json());
 app.use("/user", user);
 app.use("/account", account);
 app.use("/post", post);
+app.use("/comment", comment);
 initializeDBConnection();
 /**
  * 404 Route Handler
