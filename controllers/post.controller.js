@@ -20,7 +20,7 @@ const addPost = async (req, res) => {
       uid: userId,
       content,
       date: new Date(),
-      likes: 0,
+      likes: [],
       type,
     });
     await newPost.save();
@@ -46,6 +46,34 @@ const editPost = async (req, res) => {
   }
 };
 
+const likedPost = async (req, res) => {
+  try {
+    const { postId } = req.body;
+    const { userId } = req.data;
+    const foundPost = await Post.findById(postId);
+    foundPost.likes.push(userId);
+    console.log({ likes: foundPost.likes });
+    await foundPost.save();
+    res.status(200).json({ success: true, post: foundPost });
+  } catch (e) {
+    console.log({ success: false, error: e });
+  }
+};
+
+const unlikedPost = async (req, res) => {
+  try {
+    const { postId } = req.body;
+    const { userId } = req.data;
+    const foundPost = await Post.findById(postId);
+    foundPost.likes = foundPost.likes.filter(
+      (item) => item.toString() !== userId.toString()
+    );
+    await foundPost.save();
+    res.status(200).json({ success: true, post: foundPost });
+  } catch (e) {
+    console.log({ success: false, error: e });
+  }
+};
 //*******************TODO: need to implement the delete post feature********************
 
 // const deletePost = async (req, res) => {
@@ -59,4 +87,4 @@ const editPost = async (req, res) => {
 //   }
 // };
 
-module.exports = { getAllPosts, addPost, editPost };
+module.exports = { getAllPosts, addPost, editPost, likedPost, unlikedPost };

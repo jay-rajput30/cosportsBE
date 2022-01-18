@@ -13,13 +13,16 @@ const { User } = require("./models/user.model");
 // const { Comment } = require("./models/comment.model");
 require("dotenv").config();
 
+initializeDBConnection();
 app.use(cors());
 app.use(express.json());
+
+initializeDBConnection();
 app.use("/user", user);
 app.use("/account", account);
 app.use("/post", post);
 app.use("/comment", comment);
-initializeDBConnection();
+
 /**
  * 404 Route Handler
  * Note: DO not MOVE. This should be the last route

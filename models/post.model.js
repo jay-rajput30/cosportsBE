@@ -16,11 +16,12 @@ const postSchema = new Schema(
       type: Date,
       required: "date is required",
     },
-    likes: {
-      type: Number,
-      required: "like count is required",
-      default: 0,
-    },
+    likes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "user",
+      },
+    ],
     type: {
       type: String,
       required: "a type value is required",
