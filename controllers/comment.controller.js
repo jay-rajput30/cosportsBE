@@ -36,7 +36,7 @@ const addComment = async (req, res) => {
       postId,
       content,
       date: new Date(),
-      likes: 0,
+      likes: [],
     });
     await newComment.save();
     res.status(200).json({ success: true, comment: newComment });
