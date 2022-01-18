@@ -51,9 +51,16 @@ const likedPost = async (req, res) => {
     const { postId } = req.body;
     const { userId } = req.data;
     const foundPost = await Post.findById(postId);
-    foundPost.likes.push(userId);
-    console.log({ likes: foundPost.likes });
-    await foundPost.save();
+    const alreadyLiked = foundPost.likes.find(
+      (item) => item.toString === userId.toString()
+    );
+    if (!alreadyLiked) {
+      foundPost.likes.push(userId);
+      await foundPost.save();
+    }
+
+    // console.log({ likes: foundPost.likes });
+
     res.status(200).json({ success: true, post: foundPost });
   } catch (e) {
     console.log({ success: false, error: e });

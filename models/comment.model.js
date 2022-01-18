@@ -20,10 +20,12 @@ const commentSchema = new Schema({
     type: Date,
     required: "comment date is required",
   },
-  likes: {
-    type: Number,
-    default: 0,
-  },
+  likes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+    },
+  ],
 });
 
 const Comment = mongoose.model("comment", commentSchema);
