@@ -50,17 +50,19 @@ const likedPost = async (req, res) => {
   try {
     const { postId } = req.body;
     const { userId } = req.data;
-    const foundPost = await Post.findById(postId);
+    const foundPost = await Post.findById(postId).populate("uid");
     const alreadyLiked = foundPost.likes.find(
-      (item) => item.toString === userId.toString()
+      (item) => item.toString() === userId.toString()
     );
-    if (!alreadyLiked) {
+    console.log({ alreadyLiked, likes: foundPost.likes });
+    if (alreadyLiked == undefined) {
       foundPost.likes.push(userId);
-      await foundPost.save();
+    } else {
+      foundPost.likes = foundPost.likes.filter(
+        (item) => item.toString() !== userId.toString()
+      );
     }
-
-    // console.log({ likes: foundPost.likes });
-
+    await foundPost.save();
     res.status(200).json({ success: true, post: foundPost });
   } catch (e) {
     console.log({ success: false, error: e });
