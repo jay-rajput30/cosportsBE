@@ -31,6 +31,7 @@ const addComment = async (req, res) => {
   try {
     const { content, postId } = req.body;
     const { userId } = req.data;
+    const userDetails = await User.findById(userId);
     const newComment = new Comment({
       uid: userId,
       postId,
@@ -38,8 +39,9 @@ const addComment = async (req, res) => {
       date: new Date(),
       likes: [],
     });
+    const updatedComment = { ...newComment._doc, uid: userDetails };
     await newComment.save();
-    res.status(200).json({ success: true, comment: newComment });
+    res.status(200).json({ success: true, comment: updatedComment });
   } catch (e) {
     console.log({ error: e });
     res.status(503).json({ success: false, error: e });

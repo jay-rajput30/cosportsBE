@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get("/", authenticateRoute, getUserAccount);
 
-router.post("/updatebio/:id", updateUserBio); //this route is not used
+router.post("/updatebio", updateUserBio); //this route is not used
 
 router.post("/followuser", authenticateRoute, followUser);
 

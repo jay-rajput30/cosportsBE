@@ -55,10 +55,18 @@ const findSingleUser = async (req, res) => {
   try {
     // const { id } = req.params;
     // const userFound = await User.findById(id);
-    // console.log({ userFound });
+
+    const userAccountDetails = await Account.findOne({
+      uid: req.userFound._id,
+    });
+    const updatedUserDetails = {
+      ...req.userFound._doc,
+      userAccountDetails,
+    };
+
     res
       .status(200)
-      .json({ success: true, user: req.userFound, token: req.token });
+      .json({ success: true, user: updatedUserDetails, token: req.token });
   } catch (err) {
     console.log({ err });
     res.status(503).json({ success: false, err });
@@ -68,10 +76,10 @@ const findSingleUser = async (req, res) => {
 const editExistingUser = async (req, res) => {
   try {
     const { userId } = req.data;
-    const { firstName, lastName, username, newBio } = req.body;
+    const { firstName, lastName, username, bio, location, website } = req.body;
 
     // console.log({ data: req.data, header: req.headers });
-
+    ez;
     const existingUsername = await User.findOne({ username });
     const userAccountFound = await Account.findOne({ uid: `${userId}` });
     const userFound = await User.findById(userId);
@@ -81,10 +89,12 @@ const editExistingUser = async (req, res) => {
     //   .status(503)
     //   .json({ success: false, message: "username already exists" });
     // } else {
-    userAccountFound.bio = newBio;
+    userAccountFound.bio = bio;
     userFound.firstName = firstName;
     userFound.lastName = lastName;
     userFound.username = username;
+    userFound.location = location;
+    userFound.website = website;
 
     await userAccountFound.save();
     await userFound.save();

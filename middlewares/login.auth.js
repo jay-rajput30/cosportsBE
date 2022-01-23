@@ -2,11 +2,13 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/user.model");
 
+
 const loginVerify = async (req, res, next) => {
   try {
     const { username, password } = req.body;
 
     const userFound = await User.findOne({ username: username.toString() });
+    
     console.log({ username, password, userFound });
     bcrypt.compare(password, userFound.password, (err, result) => {
       if (result) {

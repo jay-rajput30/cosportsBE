@@ -16,6 +16,7 @@ const addPost = async (req, res) => {
   try {
     const { content, type } = req.body;
     const { userId } = req.data;
+    const userDetails = await User.findById(userId);
     const newPost = new Post({
       uid: userId,
       content,
@@ -24,7 +25,9 @@ const addPost = async (req, res) => {
       type,
     });
     await newPost.save();
-    res.status(200).json({ success: true, post: newPost });
+    const updatedPost = { ...newPost._doc, uid: userDetails };
+    // console.log({ updatedPost, newPost });
+    res.status(200).json({ success: true, post: updatedPost });
   } catch (err) {
     console.log({ err });
     res.status(503).json({ success: false, err });
