@@ -5,12 +5,14 @@ const {
   addUser,
   findSingleUser,
   editExistingUser,
+  getAllUsers,
 } = require("../controllers/user.controller");
 const loginVerify = require("../middlewares/login.auth");
 const authenticateRoute = require("../middlewares/route.auth");
 
 router.post("/", addUser);
 
+router.get("/", authenticateRoute, getAllUsers);
 router.post("/singleuser", loginVerify, findSingleUser);
 
 router.post("/edituser", authenticateRoute, editExistingUser);

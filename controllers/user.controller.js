@@ -2,6 +2,15 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user.model");
 const Account = require("../models/account.model");
 
+const getAllUsers = async (req, res) => {
+  try {
+    const allUsers = await User.find({});
+    res.status(200).json({ success: true, users: getAllUsers });
+  } catch (e) {
+    console.log({ err });
+    res.status(503).json({ success: false, err });
+  }
+};
 const addUser = async (req, res) => {
   try {
     const {
@@ -117,4 +126,4 @@ const editExistingUser = async (req, res) => {
 //   "username":"jayrajput30"
 // }
 
-module.exports = { addUser, findSingleUser, editExistingUser };
+module.exports = { addUser, findSingleUser, editExistingUser, getAllUsers };
