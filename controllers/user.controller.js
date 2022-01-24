@@ -5,7 +5,7 @@ const Account = require("../models/account.model");
 const getAllUsers = async (req, res) => {
   try {
     const allUsers = await User.find({});
-    res.status(200).json({ success: true, users: getAllUsers });
+    res.status(200).json({ success: true, users: allUsers });
   } catch (e) {
     console.log({ err });
     res.status(503).json({ success: false, err });

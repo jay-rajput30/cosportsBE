@@ -13,6 +13,7 @@ const authenticateRoute = require("../middlewares/route.auth");
 router.post("/", addUser);
 
 router.get("/", authenticateRoute, getAllUsers);
+
 router.post("/singleuser", loginVerify, findSingleUser);
 
 router.post("/edituser", authenticateRoute, editExistingUser);
