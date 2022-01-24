@@ -16,7 +16,7 @@ const updateUserBio = async (req, res) => {
   try {
     const { userId } = req.data;
     const { newBio } = req.body;
-    const userAccountFound = await Account.findOne({ uid: `${id}` });
+    const userAccountFound = await Account.findOne({ uid: `${userId}` });
     userAccountFound.bio = newBio;
     await userAccountFound.save();
     res.status(200).json({ success: true, userAccount: userAccountFound });
