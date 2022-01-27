@@ -1,7 +1,7 @@
 const express = require("express");
 const {
   getUserAccount,
-  updateUserBio,
+  updateUserDetail,
   followUser,
   unfollowUser,
 } = require("../controllers/account.controller");
@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get("/", authenticateRoute, getUserAccount);
 
-router.post("/updatebio", authenticateRoute, updateUserBio);
+router.post("/updatedetail", authenticateRoute, updateUserDetail);
 
 router.post("/followuser", authenticateRoute, followUser);
 

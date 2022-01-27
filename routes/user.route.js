@@ -15,6 +15,7 @@ router.post("/", addUser);
 router.get("/", authenticateRoute, getAllUsers);
 
 router.post("/singleuser", loginVerify, findSingleUser);
+// router.get("/singleuser", authenticateRoute, (req, res) => {});
 
 router.post("/edituser", authenticateRoute, editExistingUser);
 

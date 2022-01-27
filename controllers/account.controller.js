@@ -12,13 +12,19 @@ const getUserAccount = async (req, res) => {
   }
 };
 
-const updateUserBio = async (req, res) => {
+const updateUserDetail = async (req, res) => {
   try {
     const { userId } = req.data;
-    const { newBio } = req.body;
+    const { updatedUserDetails } = req.body;
     const userAccountFound = await Account.findOne({ uid: `${userId}` });
-    userAccountFound.bio = newBio;
+    userAccountFound.bio = updatedUserDetails.newBio;
     await userAccountFound.save();
+    const [fName, lName] = updatedUserDetails.newFullName.split(" ");
+    console.log(fName + "," + lName);
+    const userFound = await User.findById(userId);
+    userFound.firstName = fName;
+    userFound.lastName = lName === undefined ? "" : lName;
+    await userFound.save();
     res.status(200).json({ success: true, userAccount: userAccountFound });
   } catch (err) {
     console.log({ err });
@@ -81,4 +87,4 @@ const unfollowUser = async (req, res) => {
   }
 };
 
-module.exports = { getUserAccount, updateUserBio, followUser, unfollowUser };
+module.exports = { getUserAccount, updateUserDetail, followUser, unfollowUser };

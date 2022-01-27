@@ -9,7 +9,6 @@ const userSchema = new Schema(
     },
     lastName: {
       type: String,
-      required: " last name is required",
     },
     location: {
       type: String,

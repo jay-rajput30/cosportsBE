@@ -62,9 +62,6 @@ const addUser = async (req, res) => {
 
 const findSingleUser = async (req, res) => {
   try {
-    // const { id } = req.params;
-    // const userFound = await User.findById(id);
-
     const userAccountDetails = await Account.findOne({
       uid: req.userFound._id,
     });
