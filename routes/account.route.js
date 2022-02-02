@@ -1,6 +1,7 @@
 const express = require("express");
 const {
   getUserAccount,
+  getAccountDetail,
   updateUserDetail,
   followUser,
   unfollowUser,
@@ -9,6 +10,8 @@ const authenticateRoute = require("../middlewares/route.auth");
 const router = express.Router();
 
 router.get("/", authenticateRoute, getUserAccount);
+
+router.get("/accountdetail", authenticateRoute, getAccountDetail);
 
 router.post("/updatedetail", authenticateRoute, updateUserDetail);
 

@@ -87,4 +87,40 @@ const unfollowUser = async (req, res) => {
   }
 };
 
-module.exports = { getUserAccount, updateUserDetail, followUser, unfollowUser };
+const getAccountDetail = async (req, res) => {
+  try {
+    const { searchTerm } = req.body;
+
+    const allUsers = await User.find({});
+    const userFind = allUsers.filter((item) => {
+      const fullName = (item.firstName + " " + item.lastName)
+        .toString()
+        .toLowerCase();
+
+      if (
+        fullName.includes(searchTerm.toString().toLowerCase()) ||
+        item.username.includes(searchTerm.toString().toLowerCase())
+      ) {
+        return { uid: item._id };
+      }
+    });
+
+    let ids = userFind.map((item) => item._id);
+
+    const AccountFound = await Account.find({ uid: { $in: ids } }).populate(
+      "uid"
+    );
+    res.status(200).json({ success: true, accounts: AccountFound });
+  } catch (e) {
+    console.log({ e });
+    res.status(503).json({ success: false, e });
+  }
+};
+
+module.exports = {
+  getUserAccount,
+  updateUserDetail,
+  followUser,
+  unfollowUser,
+  getAccountDetail,
+};

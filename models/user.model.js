@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-
+const { Account } = require("./account.model");
 const userSchema = new Schema(
   {
     firstName: {
