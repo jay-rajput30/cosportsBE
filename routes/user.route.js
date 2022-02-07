@@ -5,6 +5,7 @@ const {
   addUser,
   findSingleUser,
   editExistingUser,
+  getSingleUser,
   getAllUsers,
 } = require("../controllers/user.controller");
 const loginVerify = require("../middlewares/login.auth");
@@ -15,7 +16,8 @@ router.post("/", addUser);
 router.get("/", authenticateRoute, getAllUsers);
 
 router.post("/singleuser", loginVerify, findSingleUser);
-// router.get("/singleuser", authenticateRoute, (req, res) => {});
+
+router.get("/singleuser", authenticateRoute, getSingleUser);
 
 router.post("/edituser", authenticateRoute, editExistingUser);
 

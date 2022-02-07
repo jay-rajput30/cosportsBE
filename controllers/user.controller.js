@@ -83,6 +83,27 @@ const findSingleUser = async (req, res) => {
   }
 };
 
+const getSingleUser = async (req, res) => {
+  try {
+    const { userId } = req.data;
+    const userData = await User.findById(userId);
+    const userAccountDetails = await Account.findOne({
+      uid: userId,
+    }).populate("uid");
+    const updatedUserDetails = {
+      ...userData._doc,
+      userAccountDetails,
+    };
+
+    res
+      .status(200)
+      .json({ success: true, user: updatedUserDetails, token: req.token });
+  } catch (err) {
+    console.log({ err });
+    res.status(503).json({ success: false, err });
+  }
+};
+
 const editExistingUser = async (req, res) => {
   try {
     const { userId } = req.data;
@@ -127,4 +148,10 @@ const editExistingUser = async (req, res) => {
 //   "username":"jayrajput30"
 // }
 
-module.exports = { addUser, findSingleUser, editExistingUser, getAllUsers };
+module.exports = {
+  addUser,
+  findSingleUser,
+  getSingleUser,
+  editExistingUser,
+  getAllUsers,
+};
