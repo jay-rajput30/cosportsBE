@@ -4,13 +4,17 @@ const Account = require("../models/account.model");
 
 const getAllUsers = async (req, res) => {
   try {
-    const allUsers = await Account.find({});
+    const allUsers = await Account.find({}).populate("uid");
+
+    // const updatedUsers = allUsers.map(item => item.uid.password = null);
+    // console.log({ updatedUsers, allUsers });
     res.status(200).json({ success: true, users: allUsers });
-  } catch (e) {
+  } catch (err) {
     console.log({ err });
     res.status(503).json({ success: false, err });
   }
 };
+
 const addUser = async (req, res) => {
   try {
     const {

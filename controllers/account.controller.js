@@ -34,32 +34,37 @@ const updateUserDetail = async (req, res) => {
 
 const followUser = async (req, res) => {
   try {
-    const { followerId } = req.body;
+    const { accountToFollowId } = req.body;
     const { userId } = req.data;
-    const followingAccount = await Account.findOne({ uid: followerId });
-    const accountFound = await Account.findOne({ uid: userId });
+    const accountToFollow = await Account.findOne({ uid: accountToFollowId });
+    const userAccount = await Account.findOne({ uid: userId });
 
     // if (userId === userFound.uid) {
     //   res.status(503).json({ success: false, message: "cannot follow self" });
     // }
 
-    const alreadyFollower = accountFound.followers.findIndex(
-      (item) => item.toString() == followerId.toString()
-    );
-    const alreadyFollowing = followingAccount.following.findIndex(
+    const alreadyFollower = accountToFollow.followers.findIndex(
       (item) => item.toString() == userId.toString()
     );
+    const alreadyFollowing = userAccount.following.findIndex(
+      (item) => item.toString() == accountToFollowId.toString()
+    );
     if (alreadyFollower === -1 && alreadyFollowing === -1) {
-      accountFound.followers.push(followerId);
-      followingAccount.following.push(userId);
-      await accountFound.save();
-      await followingAccount.save();
+      accountToFollow.followers.push(userId);
+      userAccount.following.push(accountToFollowId);
+      await userAccount.save();
+      await accountToFollow.save();
+    }else {
+    accountToFollow.followers.pop(userId);
+    userAccount.following.pop(accountToFollowId);
+      await userAccount.save();
+      await accountToFollow.save();
     }
 
-    console.log({ followingAccount, accountFound });
+    console.log({ accountToFollow, userAccount });
     res
       .status(200)
-      .json({ success: true, user: accountFound, token: req.token });
+      .json({ success: true, user: userAccount, token: req.token });
   } catch (err) {
     console.log({ err });
     res.status(503).json({ success: false, err });
@@ -90,7 +95,8 @@ const unfollowUser = async (req, res) => {
 const getAccountDetail = async (req, res) => {
   try {
     const { searchTerm } = req.body;
-
+    const { token } = req.token;
+    console.log({ token });
     const allUsers = await User.find({});
     const userFind = allUsers.filter((item) => {
       const fullName = (item.firstName + " " + item.lastName)

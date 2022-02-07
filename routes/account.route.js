@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.get("/", authenticateRoute, getUserAccount);
 
-router.get("/accountdetail", authenticateRoute, getAccountDetail);
+router.post("/accountdetail", authenticateRoute, getAccountDetail);
 
 router.post("/updatedetail", authenticateRoute, updateUserDetail);
 
