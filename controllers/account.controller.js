@@ -42,21 +42,21 @@ const followUser = async (req, res) => {
     // if (userId === userFound.uid) {
     //   res.status(503).json({ success: false, message: "cannot follow self" });
     // }
-
+    console.log({ accountToFollow, userAccount });
     const alreadyFollower = accountToFollow.followers.findIndex(
       (item) => item.toString() == userId.toString()
     );
     const alreadyFollowing = userAccount.following.findIndex(
       (item) => item.toString() == accountToFollowId.toString()
     );
-    if (alreadyFollower === -1 && alreadyFollowing === -1) {
+    if (alreadyFollower === -1 || alreadyFollowing === -1) {
       accountToFollow.followers.push(userId);
       userAccount.following.push(accountToFollowId);
       await userAccount.save();
       await accountToFollow.save();
-    }else {
-    accountToFollow.followers.pop(userId);
-    userAccount.following.pop(accountToFollowId);
+    } else {
+      accountToFollow.followers.pop(userId);
+      userAccount.following.pop(accountToFollowId);
       await userAccount.save();
       await accountToFollow.save();
     }
