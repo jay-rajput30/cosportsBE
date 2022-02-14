@@ -49,10 +49,34 @@ const addComment = async (req, res) => {
 };
 
 const getSingleComment = async (req, res) => {
-  const { postId } = req.body;
-  const { userId } = req.data;
-  const commentFound = await Comment.find({ postId, userId });
   try {
+    const { postId } = req.body;
+    const { userId } = req.data;
+    const commentFound = await Comment.find({ postId, userId });
+  } catch (e) {
+    console.log({ error: e });
+    res.status(503).json({ success: false, error: e });
+  }
+};
+
+const likedComment = async (req, res) => {
+  try {
+    const { commentId } = req.body;
+    const { userId } = req.data;
+    const foundComment = await Comment.findById(commentId).populate("uid");
+    const alreadyLiked = foundComment.likes.find(
+      (item) => item.toString() === userId.toString()
+    );
+    console.log({ alreadyLiked, likes: foundComment.likes });
+    if (alreadyLiked == undefined) {
+      foundComment.likes.push(userId);
+    } else {
+      foundComment.likes = foundComment.likes.filter(
+        (item) => item.toString() !== userId.toString()
+      );
+    }
+    await foundComment.save();
+    res.status(200).json({ success: true, comment: foundComment });
   } catch (e) {
     console.log({ error: e });
     res.status(503).json({ success: false, error: e });
@@ -64,4 +88,5 @@ module.exports = {
   getPostComments,
   addComment,
   getSingleComment,
+  likedComment,
 };
