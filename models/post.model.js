@@ -8,9 +8,8 @@ const postSchema = new Schema(
       ref: "user",
     },
     content: {
-      type: String,
-      maxlength: 300,
-      required: "the content of the post is required",
+      text: String,
+      postImg: String,
     },
     date: {
       type: Date,
@@ -22,9 +21,12 @@ const postSchema = new Schema(
         ref: "user",
       },
     ],
-    type: {
+    // type: {
+    //   type: String,
+    //   required: "a type value is required",
+    // },
+    postImg: {
       type: String,
-      required: "a type value is required",
     },
   },
   { timestamps: true }

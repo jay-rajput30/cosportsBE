@@ -14,7 +14,7 @@ const getAllPosts = async (req, res) => {
 
 const addPost = async (req, res) => {
   try {
-    const { content, type } = req.body;
+    const { content } = req.body;
     const { userId } = req.data;
     const userDetails = await User.findById(userId);
     const newPost = new Post({
@@ -22,7 +22,6 @@ const addPost = async (req, res) => {
       content,
       date: new Date(),
       likes: [],
-      type,
     });
     await newPost.save();
     const updatedPost = { ...newPost._doc, uid: userDetails };
