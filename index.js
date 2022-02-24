@@ -8,8 +8,9 @@ const user = require("./routes/user.route");
 const account = require("./routes/account.route");
 const post = require("./routes/post.route");
 const comment = require("./routes/comment.route");
+const notification = require("./routes/notification.route");
 
-const { User } = require("./models/user.model");
+// const { User } = require("./models/user.model");
 // const { Comment } = require("./models/comment.model");
 require("dotenv").config();
 
@@ -22,6 +23,7 @@ app.use("/user", user);
 app.use("/account", account);
 app.use("/post", post);
 app.use("/comment", comment);
+app.use("/notification", notification);
 
 /**
  * 404 Route Handler

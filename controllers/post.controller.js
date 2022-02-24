@@ -1,6 +1,7 @@
 const User = require("../models/user.model");
 const Account = require("../models/account.model");
 const Post = require("../models/post.model");
+const Notification = require("../models/notification.model");
 
 const getAllPosts = async (req, res) => {
   try {
@@ -23,9 +24,16 @@ const addPost = async (req, res) => {
       date: new Date(),
       likes: [],
     });
+
     await newPost.save();
     const updatedPost = { ...newPost._doc, uid: userDetails };
-    // console.log({ updatedPost, newPost });
+    console.log({ updatedPost });
+    const addNotification = new Notification({
+      username: `${userDetails.firstName} ${userDetails.lastName}`,
+      actionString: " added a post",
+      postId: newPost._doc._id,
+    });
+    await addNotification.save();
     res.status(200).json({ success: true, post: updatedPost });
   } catch (err) {
     console.log({ err });
