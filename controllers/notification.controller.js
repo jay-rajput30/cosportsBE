@@ -3,10 +3,10 @@ const Notification = require("../models/notification.model");
 const getAllNotifications = async (req, res) => {
   try {
     const allNotifications = await Notification.find({})
-      .sort({ createdAt: 1 })
+      .sort({ createdAt: -1 })
       .limit(15);
 
-    console.log({ allNotifications });
+    // console.log({ allNotifications });
     res.status(200).json({ success: true, notifications: allNotifications });
   } catch (e) {
     res.status(503).json({ success: false, error: e });

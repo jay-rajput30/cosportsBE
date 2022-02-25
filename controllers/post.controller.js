@@ -60,6 +60,8 @@ const likedPost = async (req, res) => {
   try {
     const { postId } = req.body;
     const { userId } = req.data;
+    const userDetails = await User.findById(userId);
+
     const foundPost = await Post.findById(postId).populate("uid");
     const alreadyLiked = foundPost.likes.find(
       (item) => item.toString() === userId.toString()
@@ -67,6 +69,13 @@ const likedPost = async (req, res) => {
     console.log({ alreadyLiked, likes: foundPost.likes });
     if (alreadyLiked == undefined) {
       foundPost.likes.push(userId);
+
+      const addNotification = new Notification({
+        username: `${userDetails.firstName} ${userDetails.lastName}`,
+        actionString: " liked a post",
+        postId,
+      });
+      await addNotification.save();
     } else {
       foundPost.likes = foundPost.likes.filter(
         (item) => item.toString() !== userId.toString()
