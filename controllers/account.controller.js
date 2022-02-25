@@ -39,9 +39,6 @@ const followUser = async (req, res) => {
     const accountToFollow = await Account.findOne({ uid: accountToFollowId });
     const userAccount = await Account.findOne({ uid: userId });
 
-    // if (userId === userFound.uid) {
-    //   res.status(503).json({ success: false, message: "cannot follow self" });
-    // }
     console.log({ accountToFollow, userAccount });
     const alreadyFollower = accountToFollow.followers.findIndex(
       (item) => item.toString() == userId.toString()

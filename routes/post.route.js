@@ -18,6 +18,5 @@ router.post("/editpost", authenticateRoute, editPost);
 router.post("/likepost", authenticateRoute, likedPost);
 
 router.post("/unlikepost", authenticateRoute, unlikedPost);
-// router.post("/deletepost/:id");
 
 module.exports = router;

@@ -10,8 +10,6 @@ const post = require("./routes/post.route");
 const comment = require("./routes/comment.route");
 const notification = require("./routes/notification.route");
 
-// const { User } = require("./models/user.model");
-// const { Comment } = require("./models/comment.model");
 require("dotenv").config();
 
 initializeDBConnection();

@@ -6,8 +6,7 @@ const getAllUsers = async (req, res) => {
   try {
     const allUsers = await Account.find({}).populate("uid");
 
-    // const updatedUsers = allUsers.map(item => item.uid.password = null);
-    // console.log({ updatedUsers, allUsers });
+  
     res.status(200).json({ success: true, users: allUsers });
   } catch (err) {
     console.log({ err });

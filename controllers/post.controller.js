@@ -43,7 +43,6 @@ const addPost = async (req, res) => {
 
 const editPost = async (req, res) => {
   try {
-    // const { userId } = req.user;
     const { postId, content } = req.body;
     const existingPost = await Post.findById(postId);
 
